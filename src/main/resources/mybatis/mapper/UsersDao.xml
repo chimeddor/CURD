@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.web10.users.dao.UsersDao">
+    <update id="update" parameterType="com.example.web10.users.vo.RequestUsersUpdateVo">
+        UPDATE users
+                SET username =  #{uname},
+                    p_number =  #{phone},
+                    age      =  #{age},
+                    up_date  =  #{upDate}
+        WHERE id = #{idN} and del_altv = false;
+    </update>
+    <insert id="insert" parameterType="com.example.web10.users.vo.UsersVo">
+        INSERT INTO users ( username
+        , age
+        , p_number
+        , up_date
+        , del_altv)
+
+        VAlUES ( #{uname}
+        , #{age}
+        , #{phone}
+        , #{upDate}
+        , False );
+    </insert>
+    <select id="searchList" parameterType="com.example.web10.users.vo.RequestUsersListVo" resultType="com.example.web10.users.vo.UsersVo">
+
+        SELECT  id          as idN,
+                username    as uname,
+                age         as age,
+                p_number    as phone,
+                up_date     as upDate,
+                del_altv    as delAltv
+        FROM users WHERE del_altv = false
+
+        <if test="uname != '' and uname != null">
+            AND username = #{uname}
+        </if>
+        <if test="phone != '' and phone != null">
+            AND p_number = #{phone}
+        </if>
+        <if test="age != '' and age != null">
+            AND age  = #{age}
+        </if>
+        ORDER BY id ASC;
+    </select>
+
+    <select id="selectCount" parameterType="com.example.web10.users.vo.RequestUsersListVo">
+        SELECT COUNT(username)
+            FROM users
+        WHERE del_altv = false
+        <if test="uname != '' and uname != null">
+            AND username = #{uname}
+        </if>
+        <if test="phone != '' and phone != null">
+            AND p_number = #{phone}
+        </if>
+        <if test="age != '' and age != null">
+            AND age = #{age}
+        </if>
+    </select>
+
+    <select id="checkExist" parameterType="com.example.web10.users.vo.RequestUsersIdVo">
+        SELECT COUNT(id)
+            FROM users
+        WHERE id = #{idN}
+            AND del_altv = false
+        <if test="idN != '' and idN != null">
+            AND id = #{idN}
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="com.example.web10.users.vo.RequestUsersIdVo">
+        UPDATE users
+        SET
+            del_altv = TRUE,
+            up_date = #{upDate}
+        WHERE
+            id = #{idN}
+        <if test="idN != '' and idN != null">
+            AND id = #{idN}
+        </if>
+    </delete>
+</mapper>
