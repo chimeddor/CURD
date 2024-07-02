@@ -17,7 +17,7 @@ public class RequestProjectVo {
 
     @Schema(
             description = "project name",
-            example = "bigdata",
+            example = "machine learning",
             type = "string",
             nullable = true
     )
@@ -26,7 +26,7 @@ public class RequestProjectVo {
 
     @Schema(
             description = "project desc",
-            example = "this project is...",
+            example = "machine learning is",
             type = "string",
             maxLength = 1000,
             nullable = true
