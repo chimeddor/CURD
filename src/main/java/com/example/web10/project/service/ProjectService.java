@@ -10,4 +10,5 @@ public interface ProjectService {
     void update(RequestProjectUpdateVo vo) throws Exception;
     int checkExist(RequestProjectListVo vo) throws Exception;
     int checkId(RequestProjectUpdateVo vo) throws Exception;
+    int checkUid(RequestProjectVo vo) throws Exception;
 }
