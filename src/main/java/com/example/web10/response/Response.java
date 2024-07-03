@@ -2,9 +2,11 @@ package com.example.web10.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+@Getter
+@Setter
 @Builder
 public class Response<T> {
 
@@ -13,6 +15,7 @@ public class Response<T> {
             example = "200"
     )
     private int status;
+
     @Schema(
             description = "message",
             example = "OK"
@@ -30,29 +33,29 @@ public class Response<T> {
     }
 
     // 게터와 세터
-    public int getStatus() {
-        return status;
-    }
+//    public int getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(int status) {
+//        this.status = status;
+//    }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+//    public String getMessage() {
+//        return message;
+//    }
+//
+//    public void setMessage(String message) {
+//        this.message = message;
+//    }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
+//    public T getData() {
+//        return data;
+//    }
+//
+//    public void setData(T data) {
+//        this.data = data;
+//    }
 
 }
 
