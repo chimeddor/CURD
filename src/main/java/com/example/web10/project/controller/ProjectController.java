@@ -2,7 +2,7 @@ package com.example.web10.project.controller;
 
 import com.example.web10.project.service.ProjectService;
 import com.example.web10.project.vo.*;
-import com.example.web10.response.Response;
+import com.example.web10.response.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,11 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Tag(name = "project")
@@ -26,12 +22,22 @@ import java.util.List;
 @RequestMapping(value = "/project", method = RequestMethod.POST)
 public class ProjectController {
 
-    @Autowired
-    private final ProjectService service;
-
-    @Operation(summary = "추가", description = "사용자의 프로젝트 추가")
+    @Operation(summary = "추가", description = "사용자의 프로젝트 추가",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Response.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid input value", content = @Content(schema = @Schema(implementation = ValidErrorResponse.class)))})
     @RequestMapping("/insert")
     public @ResponseBody Response<?> insert(@Valid @RequestBody RequestProjectVo vo) throws Exception{
+//        int exist = service.checkUid(vo);
+//
+//        if (exist == 0){
+//            return Response
+//                    .builder()
+//                    .status(HttpServletResponse.SC_NOT_FOUND)
+//                    .message("Not Found")
+//                    .build();
+//        }
+
         service.insert(vo);
         return Response
                 .builder()
@@ -40,21 +46,18 @@ public class ProjectController {
                 .build();
     }
 
+    @Autowired
+    private final ProjectService service;
+
     @Operation(summary = "조회", description = "프로젝트 조회",
-            responses = {@ApiResponse(responseCode = "200",
-            description = "OK",
-            content = @Content(schema = @Schema(implementation = Response.class)))})
+            responses = {
+                        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Response.class))),
+                        @ApiResponse(responseCode = "400", description = "Invalid input value", content = @Content(schema = @Schema(implementation = ValidErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(implementation = ErrorResult.class)))
+            })
     @RequestMapping("/search")
     public @ResponseBody Response<List<ProjectVo>> search(@Valid @RequestBody RequestProjectListVo vo) throws Exception{
 
-        int count = service.checkExist(vo);
-        if (count == 0){
-            return Response
-                    .<List<ProjectVo>>builder()
-                    .status(HttpServletResponse.SC_NOT_FOUND)
-                    .message("Not Found")
-                    .build();
-        }
 
         List<ProjectVo> rsp = service.search(vo);
 
@@ -66,21 +69,16 @@ public class ProjectController {
                 .build();
     }
 
-    @Operation(summary = "수정", description = "프로젝트 수정")
+    @Operation(summary = "수정", description = "프로젝트 수정",
+            responses = {
+                        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Response.class))),
+                        @ApiResponse(responseCode = "400", description = "Invalid input value", content = @Content(schema = @Schema(implementation = ValidErrorResponse.class))),
+                        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(implementation = ErrorResult.class)))
+    })
     @RequestMapping("/update")
     public @ResponseBody Response<?> update(@Valid @RequestBody RequestProjectUpdateVo vo) throws Exception{
-       int exist = service.checkId(vo);
-
-       if (exist == 0){
-           return Response
-                   .builder()
-                   .status(HttpServletResponse.SC_NOT_FOUND)
-                   .message("Not Found")
-                   .build();
-       }
 
         service.update(vo);
-
         return Response
                 .builder()
                 .status(HttpServletResponse.SC_OK)
