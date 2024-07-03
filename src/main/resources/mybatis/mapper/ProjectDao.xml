@@ -14,7 +14,7 @@
                 #{prStartDate},
                 #{prEndDate},
                 #{proDesc},
-                #{crId})
+                #{crId});
     </insert>
 
     <select id="search" parameterType="com.example.web10.project.vo.RequestProjectListVo" resultType="com.example.web10.project.vo.ProjectVo">
@@ -59,6 +59,12 @@
             ON pr.cr_id = u.id
         WHERE pr.p_id = #{pid} AND u.del_altv = false;
     </select>
+
+    <select id="checkUid" parameterType="com.example.web10.project.vo.RequestProjectVo">
+        SELECT count(username)
+        FROM users WHERE id IN (#{crId});
+    </select>
+
     <update id="update" parameterType="com.example.web10.project.vo.RequestProjectUpdateVo">
         UPDATE project
             SET pr_name = #{pname},
