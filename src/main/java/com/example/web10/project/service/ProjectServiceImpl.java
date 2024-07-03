@@ -2,8 +2,10 @@ package com.example.web10.project.service;
 
 import com.example.web10.project.dao.ProjectDao;
 import com.example.web10.project.vo.*;
+import com.example.web10.response.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,6 +20,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void insert(RequestProjectVo vo) throws Exception {
+        int check = dao.checkUid(vo);
+        if (check == 0){
+            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
         ProjectVo projectVo = ProjectVo
                 .builder()
                 .pname(vo.getPname())
@@ -41,12 +47,27 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public int checkUid(RequestProjectVo vo) throws Exception {
+        return dao.checkUid(vo);
+    }
+
+    @Override
     public List<ProjectVo> search(RequestProjectListVo vo) throws Exception {
+        int count = dao.checkExist(vo);
+
+        if (count == 0){
+            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
         return dao.search(vo);
     }
 
     @Override
     public void update(RequestProjectUpdateVo vo) throws Exception {
+        int check = dao.checkId(vo);
+        if (check == 0){
+            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
+
         ProjectVo projectVo = ProjectVo
                 .builder()
                 .pname(vo.getPname())
