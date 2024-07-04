@@ -5,6 +5,8 @@ import com.example.web10.project.vo.*;
 import java.util.List;
 
 public interface ProjectService {
+    //추상 메서드 /hiiswer methoduud
+
     void insert(RequestProjectVo vo) throws Exception;
     List<ProjectVo> search(RequestProjectListVo vo) throws Exception;
     void update(RequestProjectUpdateVo vo) throws Exception;
