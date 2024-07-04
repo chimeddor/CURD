@@ -25,6 +25,8 @@
                p.pro_desc,
                p.cr_id,
                p.chng_nm,
+               p.upd_id,
+               p.upd_dte,
                u.username
         FROM project p
             LEFT JOIN users u
@@ -39,10 +41,11 @@
         ORDER BY p.p_id ASC;
     </select>
     <select id="checkExist" parameterType="com.example.web10.project.vo.RequestProjectListVo">
+<!--        해당 되는 유저가 없는 경우 본 프로젝트를 count 안 함.-->
         SELECT count(pr.pr_name)
             FROM project pr
         LEFT JOIN users u
-            ON  pr.cr_id = u.id
+            ON  u.id = pr.cr_id
         WHERE u.del_altv = false
         <if test="pname != '' and pname != null">
             AND pr_name = #{pname}
@@ -62,14 +65,18 @@
 
     <select id="checkUid" parameterType="com.example.web10.project.vo.RequestProjectVo">
         SELECT count(username)
-        FROM users WHERE id IN (#{crId});
+        FROM users
+        WHERE id IN (#{crId});
     </select>
 
     <update id="update" parameterType="com.example.web10.project.vo.RequestProjectUpdateVo">
-        UPDATE project
-            SET pr_name = #{pname},
-        pro_desc = #{proDesc},
-            chng_nm = chng_nm + 1
-        WHERE p_id = #{pid};
+        UPDATE project pr SET
+            pr_name = #{pname},
+            pro_desc = #{proDesc},
+            chng_nm = chng_nm + 1,
+            upd_id =  u.id,
+            upd_dte = #{updDte}
+        FROM users u
+        WHERE u.id = pr.cr_id AND p_id = #{pid};
     </update>
 </mapper>
