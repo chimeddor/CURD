@@ -35,10 +35,9 @@ public class RequestUsersListVo {
     @Schema(
             description = "나이",
             example = "24",
-            type = "int",
+            type = "integer",
             nullable = true
     )
     @Max(200)
     private int age;
-
 }
