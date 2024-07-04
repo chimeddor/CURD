@@ -2,10 +2,14 @@ package com.example.web10.project.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -17,6 +21,7 @@ public class RequestProjectUpdateVo {
             type = "integer",
             nullable = false
     )
+    @NotNull
     @Min(1)
     private int pid;
 
@@ -25,8 +30,9 @@ public class RequestProjectUpdateVo {
             example = "machine learning",
             type = "string",
             maxLength = 50,
-            nullable = true
+            nullable = false
     )
+    @NotNull
     @Size(min = 5, max = 50)
     private String pname;
 
@@ -39,5 +45,4 @@ public class RequestProjectUpdateVo {
     )
     @Size(min = 1, max = 1000)
     private String proDesc;
-
 }
