@@ -20,16 +20,17 @@ public class RequestUsersVo {
             description = "사용자 이름",
             example = "chimeddorj",
             type = "string",
-            maxLength = 100,
+            maxLength = 50,
             nullable = false
     )
-    @Size(min=5, max=100)
+    @NotNull
+    @Size(min=5, max=50)
     private String uname;
 
     @Schema(
             description = "나이",
             example = "24",
-            type = "int",
+            type = "integer",
             nullable = true
     )
     @Min(1)
