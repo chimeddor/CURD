@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +56,11 @@ public class UsersController {
     })
     @RequestMapping("/search")
     public @ResponseBody Response<List<UsersVo>> searchList(@Valid @RequestBody RequestUsersListVo vo) throws Exception{
+
+        int count = service.selectCount(vo);
+        if (count == 0){
+            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
 
 //        int count = service.selectCount(vo);
 //
@@ -107,6 +113,12 @@ public class UsersController {
 //                    .message("Not found")
 //                    .build();
 //        }
+
+        int count = service.checkExist(vo);
+
+        if (count == 0){
+            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
 
         service.delete(vo);
         return Response

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -28,15 +29,13 @@ public class ProjectController {
                     @ApiResponse(responseCode = "400", description = "Invalid input value", content = @Content(schema = @Schema(implementation = ValidErrorResponse.class)))})
     @RequestMapping("/insert")
     public @ResponseBody Response<?> insert(@Valid @RequestBody RequestProjectVo vo) throws Exception{
-//        int exist = service.checkUid(vo);
-//
-//        if (exist == 0){
-//            return Response
-//                    .builder()
-//                    .status(HttpServletResponse.SC_NOT_FOUND)
-//                    .message("Not Found")
-//                    .build();
-//        }
+
+        // 해당 유저가 존재하는지 확인.
+        int exist = service.checkUid(vo);
+
+        if (exist == 0){
+           throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
 
         service.insert(vo);
         return Response
@@ -58,6 +57,10 @@ public class ProjectController {
     @RequestMapping("/search")
     public @ResponseBody Response<List<ProjectVo>> search(@Valid @RequestBody RequestProjectListVo vo) throws Exception{
 
+        int check = service.checkExist(vo);
+        if (check == 0){
+            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
 
         List<ProjectVo> rsp = service.search(vo);
 
@@ -77,6 +80,10 @@ public class ProjectController {
     })
     @RequestMapping("/update")
     public @ResponseBody Response<?> update(@Valid @RequestBody RequestProjectUpdateVo vo) throws Exception{
+        int check = service.checkId(vo);
+        if (check == 0){
+            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+        }
 
         service.update(vo);
         return Response
