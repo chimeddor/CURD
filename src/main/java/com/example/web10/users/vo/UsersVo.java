@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -24,30 +25,27 @@ public class UsersVo {
         @Schema(
                 description = "id",
                 example = "1",
+                type = "integer",
                 nullable = false
         )
-        @Min(1)
         private int idN;
 
         @Schema(
                 description = "사용자 이름",
                 example = "chimeddorj",
                 type = "string",
-                maxLength = 100,
+                maxLength = 50,
                 nullable = false
         )
-//        @NotNull
-        @Size(min=5, max=100)
         private String uname;
 
         @Schema(
                 description = "나이",
                 example = "24",
-                type = "int",
+                type = "integer",
                 nullable = true
         )
-        @Min(1)
-        private int age;
+        private Integer age;
 
         @Schema(
                 description = "phone 번호",
@@ -55,26 +53,22 @@ public class UsersVo {
                 type = "string",
                 nullable=true
         )
-        @Size(min = 8, max = 20)
         private String phone;
 
         @Schema(
                 description = "update day",
-                example = "20230023",
+                example = "2024-07-04T07:28:58.595Z",
                 type = "date",
                 nullable = false
         )
-        @NotNull
-        @DateTimeFormat(pattern = "yyyyMMdd")
         private Date upDate;
 
         @Schema(
                 description = "삭제 여부",
-                example = "0",
+                example = "false",
                 type = "boolean",
                 nullable = false
         )
-        @NotNull
         private boolean delAltv;
 
 //        @Schema(

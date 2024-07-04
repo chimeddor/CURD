@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -16,9 +18,9 @@ public class ProjectVo {
     @Schema(
             description = "project id",
             example = "1",
-            type = "integer"
+            type = "integer",
+            nullable = false
     )
-    @Min(1)
     private int pid;
 
     @Schema(
@@ -28,25 +30,22 @@ public class ProjectVo {
             maxLength = 50,
             nullable = false
     )
-    @Size(min = 1, max = 50)
     private String pname;
 
     @Schema(
             description = "project start day",
-            example = "2024-06-28",
+            example = "2024-07-04T07:28:58.595Z",
             type = "date",
-            nullable = true
+            nullable = false
     )
-    @DateTimeFormat(pattern = "yyyyMMdd")
     private Date prStartDate;
 
     @Schema(
             description = "project end date",
-            example = "2024-06-28",
+            example = "2024-07-04T07:28:58.595Z",
             type = "date",
             nullable = true
     )
-    @DateTimeFormat(pattern = "yyyyMMdd")
     private Date prEndDate;
 
     @Schema(
@@ -56,31 +55,48 @@ public class ProjectVo {
             maxLength = 1000,
             nullable = true
     )
-    @Size(min = 1, max = 1000)
     private String proDesc;
 
     @Schema(
             description = "creater id",
             example = "1",
-            type = "int",
+            type = "integer",
             nullable = false
     )
-    @Min(1)
     private int crId;
 
     @Schema(
             description = "update 여부",
             example = "1",
-            type = "int",
+            type = "integer",
             nullable = false
         )
     private int chngNm;
 
     @Schema(
+            description = "update user id",
+            example = "1",
+            type = "integer",
+            nullable = true
+    )
+    private Integer updId;
+
+    @Schema(
+            description = "updated date",
+            example = "2024-07-04T07:28:58.595Z",
+            type = "date",
+            nullable = true
+    )
+    private Date updDte;
+
+    @Schema(
             description = "username",
             example = "chimeddorj",
             type = "string",
-            maxLength = 50)
+            maxLength = 50,
+            nullable = false
+    )
+
     private String uname;
 
 }
