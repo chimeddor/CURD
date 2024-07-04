@@ -39,10 +39,6 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     public List<UsersVo> searchList(RequestUsersListVo vo) throws Exception {
-        int count = dao.selectCount(vo);
-        if (count == 0){
-            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
-        }
         return dao.searchList(vo);
     }
 
@@ -75,11 +71,11 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     public void delete(RequestUsersIdVo vo) throws Exception {
-        int count = dao.checkExist(vo);
-
-        if (count == 0){
-            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
-        }
+//        int count = dao.checkExist(vo);
+//
+//        if (count == 0){
+//            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
+//        }
 
         UsersVo usersVo = UsersVo
                 .builder()

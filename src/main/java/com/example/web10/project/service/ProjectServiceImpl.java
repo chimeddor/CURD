@@ -53,26 +53,18 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectVo> search(RequestProjectListVo vo) throws Exception {
-        int count = dao.checkExist(vo);
-
-        if (count == 0){
-            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
-        }
         return dao.search(vo);
     }
 
     @Override
     public void update(RequestProjectUpdateVo vo) throws Exception {
-        int check = dao.checkId(vo);
-        if (check == 0){
-            throw new NotFoundException("Not Found", HttpStatus.NOT_FOUND.value());
-        }
 
         ProjectVo projectVo = ProjectVo
                 .builder()
                 .pname(vo.getPname())
                 .proDesc(vo.getProDesc())
                 .pid(vo.getPid())
+                .updDte(new Date())
                 .build();
 
         dao.update(projectVo);
