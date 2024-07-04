@@ -13,9 +13,10 @@ public class RequestUsersUpdateVo {
     @Schema(
             description = "id",
             example = "1",
-            minLength = 1,
+            type = "integer",
             nullable = false
     )
+    @NotNull
     @Min(1)
     private int idN;
 
@@ -23,11 +24,11 @@ public class RequestUsersUpdateVo {
             description = "사용자 이름",
             example = "chimeddorj",
             type = "string",
-            maxLength = 100,
+            maxLength = 50,
             nullable = true
     )
 
-    @Size(min=5, max=100)
+    @Size(min=5, max=50)
     private String uname;
 
     @Schema(
@@ -42,7 +43,7 @@ public class RequestUsersUpdateVo {
     @Schema(
             description = "나이",
             example = "24",
-            type = "int",
+            type = "integer",
             nullable = true
     )
     @Max(200)
