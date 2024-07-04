@@ -24,10 +24,10 @@ public class ValidErrorResponse {
     private int status;
     private List<FieldError> errors;
 
-    private ValidErrorResponse(final ErrorCode code) {
-        this.message = code.getMessage();
-        this.status = code.getStatus().value();
-    }
+//    private ValidErrorResponse(final ErrorCode code) {
+//        this.message = code.getMessage();
+//        this.status = code.getStatus().value();
+//    }
 
     private ValidErrorResponse(final ErrorCode code, final List<FieldError> errors) {
         this.message = code.getMessage();
