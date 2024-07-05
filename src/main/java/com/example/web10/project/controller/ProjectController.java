@@ -30,7 +30,7 @@ public class ProjectController {
     @Operation(summary = "추가", description = "사용자의 프로젝트 추가",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Response.class))),
-                    @ApiResponse(responseCode = "400", description = "Invalid input value", content = @Content(schema = @Schema(implementation = NotFoundException.class)))})
+                    @ApiResponse(responseCode = "400", description = "Invalid input value", content = @Content(schema = @Schema(implementation = ValidErrorResponse.class)))})
     @RequestMapping("/insert")
     public @ResponseBody Response<?> insert(@Valid @RequestBody RequestProjectVo vo) throws Exception{
 
