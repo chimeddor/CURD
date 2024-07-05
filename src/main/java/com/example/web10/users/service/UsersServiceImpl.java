@@ -21,9 +21,11 @@ import java.util.List;
 @Slf4j
 public class UsersServiceImpl implements UsersService{
 
+    // 인스턴스를 이용하고 싶은 곳에서 부여한다.
     @Autowired
     private final UsersDao dao;
 
+    // super 클래스나 인터페이스의 메서드를 상속 혹은 구현하는 클래스에서 재정의하는 것을 의미.
     @Override
     public void insert(RequestUsersVo vo) throws Exception {
 
