@@ -15,9 +15,11 @@ import java.util.List;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
+    // 인스턴스 생성. 인스턴스를 이용하고 싶은 곳에 어노테이션을 부여한다.
     @Autowired
     private final ProjectDao dao;
 
+    //재정의된 메서드라는 의미.
     @Override
     public void insert(RequestProjectVo vo) throws Exception {
         int check = dao.checkUid(vo);
