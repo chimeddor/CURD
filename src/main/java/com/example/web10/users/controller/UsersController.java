@@ -32,7 +32,10 @@ import java.util.Map;
 public class UsersController {
 
     private final UsersService service;
-//    @ApiResponse(responseCode = "400", description = "코드 추가 실패", content = @Content(schema = @Schema(implementation = ResponseVO.class))),
+
+    // reponseCode은 swagge에서 Code 부분
+    // description은 swagge에서 바로 보이는 description 부분
+    // swagge에서 바로 보이는 implementation에 있는 class가 있어야 처리 status과 메시지가 제대로 보인다. 부분
 
     @Operation(summary = "추가", description = "새로운 사용자 추가 부분",
             responses = {@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Response.class))),
